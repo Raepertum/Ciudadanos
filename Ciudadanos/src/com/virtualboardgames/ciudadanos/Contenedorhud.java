@@ -18,11 +18,11 @@ public class Contenedorhud {
 		init();
 	};
 	private void init(){
-		contenedordeactores = new Stage();
+		contenedordeactores = new Stage(800,600,true);
 		
 		botondeeventos = new Botondeeventos(contenedordeactores);
 		botonsocial = new Botonsocial(contenedordeactores);
-		botondealmacen = new Botondealmacen(contenedordeactores);
+		botondealmacen = new Botondealmacen(contenedordeactores);		
 		botondecomercio = new Botondecomercio(contenedordeactores);
 		botondeespionaje = new Botondeespionaje(contenedordeactores);
 		botondeejercito = new Botondeejercito(contenedordeactores);

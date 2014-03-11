@@ -1,10 +1,12 @@
 package com.virtualboardgames.ciudadanos;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Disposable;
@@ -17,13 +19,19 @@ public class Texturasysonidos implements Disposable, AssetErrorListener{
 	
 	//Para que sólo se pueda instanciar una vez
 	private Texturasysonidos(){};
-		
+	
+	//Para poder crear skins para los widgets
+	TextureAtlas atlasdetodaslastexturas;
+	
+	//Las fuentes
+	public Fuentes fuentes;	
 	//La Torre
 	public TorreGrafica torre;
 	//La tierra (Y el campo más adelante)
 	public TierraGrafica tierra;
 	//Los botones del juego
 	public BotonesGrafica botones;
+	
 	
 	
 	public void init(AssetManager assetmanager){
@@ -33,12 +41,13 @@ public class Texturasysonidos implements Disposable, AssetErrorListener{
 		assetmanager.finishLoading();
 	
 	
-	TextureAtlas atlasdetodaslastexturas = assetmanager.get(Constantes.TEXTURE_ATLAS);
+	atlasdetodaslastexturas = assetmanager.get(Constantes.TEXTURE_ATLAS);
 	for (Texture t : atlasdetodaslastexturas.getTextures())
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	
 	//Cada vez que creemos un nuevo objeto, hay que registrar aquí los gráficos
 	
+	fuentes = new Fuentes();
 	torre = new TorreGrafica(atlasdetodaslastexturas);
 	tierra = new TierraGrafica(atlasdetodaslastexturas);
 	botones = new BotonesGrafica(atlasdetodaslastexturas);
@@ -52,7 +61,28 @@ public class Texturasysonidos implements Disposable, AssetErrorListener{
 	@Override
 	public void dispose() {
 		assetmanager.dispose();
+		fuentes.ComicBlanca.dispose();
+		fuentes.ComicNegra.dispose();
 		
+	}
+	
+	public class Fuentes{
+		public final BitmapFont ComicNegra;
+		public final BitmapFont ComicBlanca;
+		public final BitmapFont Arial15;
+		
+		public Fuentes(){
+			ComicNegra=new BitmapFont(Gdx.files.internal("Fuentes/ComicBlack.fnt"),false);
+			ComicBlanca=new BitmapFont(Gdx.files.internal("Fuentes/ComicWhite.fnt"),false);
+			Arial15 = new BitmapFont(Gdx.files.internal("Fuentes/arial-15.fnt"),false);
+			
+			//Escala
+			ComicNegra.setScale(1f);
+			ComicBlanca.setScale(1f);
+			//Filtro
+			ComicBlanca.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+			ComicNegra.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		}
 	}
 	
 	

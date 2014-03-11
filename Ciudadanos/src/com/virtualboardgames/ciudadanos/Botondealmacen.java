@@ -11,10 +11,12 @@ public class Botondealmacen extends Actor{
 
 	private float posicionx = 750;
 	private float posiciony = 575;
+	private Stage stage;
 	
 	private TextureRegion texturabotondealmacen;
 	
 	public Botondealmacen(Stage stage){
+		this.stage = stage;
 		init();
 	};
 	private void init(){
@@ -22,11 +24,13 @@ public class Botondealmacen extends Actor{
 		this.setBounds(750, 575, 25, 25);
 		
 		this.addListener(new InputListener(){
+			
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int actor){
-				System.out.println("Dentrodelarea");
 				texturabotondealmacen = Texturasysonidos.texturasysonidos.botones.botonalmacenpulsado;
+				abrirmenualmacen();
 				return true;
 			};
+			
 			public void enter(InputEvent event, float x, float y, int pointer, Actor actor){
 				texturabotondealmacen = Texturasysonidos.texturasysonidos.botones.botonalmacensobre;
 			};
@@ -38,6 +42,15 @@ public class Botondealmacen extends Actor{
 		 	};
 		});
 	};
+	
+	private void abrirmenualmacen() {
+		MenuAlmacen menualmacen = new MenuAlmacen();
+		menualmacen.setPosition(0, 0);
+		menualmacen.setX(0);
+		stage.addActor(menualmacen);
+		
+	};
+	
 	
 	public void draw(SpriteBatch batch, float alpha){
         batch.draw(texturabotondealmacen,posicionx,posiciony);
